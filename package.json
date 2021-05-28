@@ -1,0 +1,21 @@
+{
+  "name": "scss-playground",
+  "version": "1.0.0",
+  "description": "边学边写 scss",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "sass --watch src:lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trcat/scss-playground.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trcat/scss-playground/issues"
+  },
+  "homepage": "https://github.com/trcat/scss-playground#readme",
+  "dependencies": {}
+}

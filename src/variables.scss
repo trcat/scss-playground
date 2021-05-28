@@ -1,0 +1,9 @@
+$--font-size: 20px;
+
+:root {
+  --font-size: $--font-size;
+}
+
+.app {
+  font-size: var(--font-size);
+}
