@@ -3,7 +3,7 @@ $--font-size: 20px;
 :root {
   --font-size: #{$--font-size};
   --color: green;
-  --css-prefix: 'md'
+  --css-prefix: 'r'
 }
 
 .app {
@@ -11,5 +11,12 @@ $--font-size: 20px;
 }
 
 .app2 {
+  color: red;
   color: var(--color, red);
+}
+
+.app3 {
+  &:before {
+    content: var(--css-prefix)'-iconfont'
+  }
 }
