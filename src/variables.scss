@@ -6,6 +6,8 @@ $--font-size: 20px;
   --css-prefix: 'r'
 }
 
+$--css-prefix: var(--css-prefix);
+
 .app {
   font-size: var(--font-size);
 }
@@ -17,6 +19,6 @@ $--font-size: 20px;
 
 .app3 {
   &:before {
-    content: var(--css-prefix)'-iconfont'
+    content: #{$--css-prefix}'ed';
   }
 }
