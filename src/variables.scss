@@ -6,17 +6,21 @@ $--font-size: 20px;
   --css-prefix: 'r';
 }
 
-.app {
-  font-size: var(--font-size);
-}
-
-.app2 {
-  color: red;
-  color: var(--color, red);
-}
-
-.app3 {
-  &:before {
-    content: var(--css-prefix)'ed';
+body {
+  --font-size: 20px;
+  .app {
+    font-size: var(--font-size);
+  }
+  
+  .app2 {
+    color: red;
+    color: var(--color, red);
+  }
+  
+  .app3 {
+    font-size: var(--font-size);
+    &:before {
+      content: var(--css-prefix)'ed';
+    }
   }
 }
