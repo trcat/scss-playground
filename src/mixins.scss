@@ -1,0 +1,9 @@
+@use 'sass:color';
+
+@mixin colorMixin($key, $color, $alpha) {
+  #{$key}: color.adjust($color, $alpha: $alpha)
+}
+
+.color {
+  @include colorMixin('color', #1E88E5, -0.9);
+}
