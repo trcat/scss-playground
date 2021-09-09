@@ -1,7 +1,15 @@
 @use 'sass:color';
 
-@mixin colorMixin($key, $color, $alpha) {
-  #{$key}: color.adjust($color, $alpha: $alpha)
+@mixin color($property, $key, $alpha: 2, $important: false) {
+  $value: adjust-color(map-get($variables, $key), $alpha: $alpha - 1);
+
+  @if ($important) {
+    #{$property}: $value !important;
+    #{$property}: var(--md-#{$key}, $value) !important;
+  } @else {
+    #{$property}: $value;
+    #{$property}: var(--md-#{$key}, $value);
+  }
 }
 
 .color {
