@@ -1,6 +1,6 @@
-$md-color-1: red;
-$md-color-2: green;
-$md-color-3: blue;
+$md-color-1: 255, 0, 0;
+$md-color-2: 0, 255, 0;
+$md-color-3: 0, 0, 255;
 
 $variables: (
   'color-1': $md-color-1,
@@ -43,15 +43,16 @@ $variables: (
 }
 
 // 3
-@mixin stripes($colors, $direction: to bottom) { 
+@mixin md-linear($colors, $direction: to right) { 
   $gradient: ();
   $css3Gradient: ();
 
   @for $i from 1 through length($colors) {
     $item: nth($colors, $i);
     $key: nth($item, 1);
-    $color: map-get($map: $variables, $key: $key);
-    $cssColor: var(--md-#{$key}, $color);
+    $value: map-get($map: $variables, $key: $key);
+    $color: rgb(nth($value, 1), nth($value, 2), nth($value, 3));
+    $cssColor: rgb(var(--md-#{$key}, $value));
 
     @if (length($item) == 2) {
       $dump: nth($item, 2);
@@ -67,17 +68,35 @@ $variables: (
   background-image: linear-gradient($direction, $css3Gradient);
 }
 
+@mixin md-radial($colors, $direction: circle at center) { 
+  $gradient: ();
+  $css3Gradient: ();
+
+  @for $i from 1 through length($colors) {
+    $item: nth($colors, $i);
+    $key: nth($item, 1);
+    $value: map-get($map: $variables, $key: $key);
+    $color: rgb(nth($value, 1), nth($value, 2), nth($value, 3));
+    $cssColor: rgb(var(--md-#{$key}, $value));
+
+    @if (length($item) == 2) {
+      $dump: nth($item, 2);
+      $gradient: append($gradient, ($color $dump), $separator: comma);
+      $css3Gradient: append($css3Gradient, ($cssColor $dump), $separator: comma);
+    } @else {
+      $gradient: append($gradient, $color, $separator: comma);
+      $css3Gradient: append($css3Gradient, $cssColor, $separator: comma);
+    }
+  }
+
+  background-image: radial-gradient($direction, $gradient);
+  background-image: radial-gradient($direction, $css3Gradient);
+}
+
 .stripes {
-  $colors: color-1, color-2;
-  @include stripes($colors);
+  @include md-linear((color-1, color-2));
 }
 
 .stripes2 {
-  $colors: color-1, color-2, color-3;
-  @include stripes($colors);
-}
-
-.stripes3 {
-  $colors: color-1, color-2 50%, color-3 70%;
-  @include stripes($colors);
+  @include md-radial((color-1, color-2));
 }
