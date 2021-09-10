@@ -1,17 +1,83 @@
-@use 'sass:color';
+$md-color-1: red;
+$md-color-2: green;
+$md-color-3: blue;
 
-@mixin color($property, $key, $alpha: 2, $important: false) {
-  $value: adjust-color(map-get($variables, $key), $alpha: $alpha - 1);
+$variables: (
+  'color-1': $md-color-1,
+  'color-2': $md-color-2,
+  'color-3': $md-color-3
+);
 
-  @if ($important) {
-    #{$property}: $value !important;
-    #{$property}: var(--md-#{$key}, $value) !important;
+// 1
+@mixin background-gradient($start-color, $end-color, $orientation) { 
+  background: $start-color;
+
+  @if $orientation == 'vertical' {
+    background: -webkit-linear-gradient(top, $start-color, $end-color);
+    background: linear-gradient(to bottom, $start-color, $end-color);
+  } @else if $orientation == 'horizontal' {
+    background: -webkit-linear-gradient(left, $start-color, $end-color);
+    background: linear-gradient(to right, $start-color, $end-color);
   } @else {
-    #{$property}: $value;
-    #{$property}: var(--md-#{$key}, $value);
+    background: -webkit-radial-gradient(center, ellipse cover, $start-color, $end-color);
+    background: radial-gradient(ellipse at center, $start-color, $end-color);
   }
 }
 
-.color {
-  @include colorMixin('color', #1E88E5, -0.9);
+// 2
+@mixin linear-gradient($from, $to) {
+  /* Fallback for sad browsers */
+  background-color: $to;
+  /* Mozilla Firefox */
+  background-image:-moz-linear-gradient($from, $to);
+  /* Opera */
+  background-image:-o-linear-gradient($from, $to);
+  /* WebKit (Safari 4+, Chrome 1+) */
+  background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0, $from), color-stop(1, $to));
+  /* WebKit (Chrome 11+) */
+  background-image: -webkit-linear-gradient($from, $to);
+  /* IE10 */
+  background-image: -ms-linear-gradient($from, $to);
+  /* W3C */
+  background-image: linear-gradient($from, $to);
+}
+
+// 3
+@mixin stripes($colors, $direction: to bottom) { 
+  $gradient: ();
+  $css3Gradient: ();
+
+  @for $i from 1 through length($colors) {
+    $item: nth($colors, $i);
+    $key: nth($item, 1);
+    $color: map-get($map: $variables, $key: $key);
+    $cssColor: var(--md-#{$key}, $color);
+
+    @if (length($item) == 2) {
+      $dump: nth($item, 2);
+      $gradient: append($gradient, ($color $dump), $separator: comma);
+      $css3Gradient: append($css3Gradient, ($cssColor $dump), $separator: comma);
+    } @else {
+      $gradient: append($gradient, $color, $separator: comma);
+      $css3Gradient: append($css3Gradient, $cssColor, $separator: comma);
+    }
+  }
+
+  background-image: linear-gradient($direction, $gradient);
+  background-image: linear-gradient($direction, $css3Gradient);
+}
+
+.stripes {
+  $colors: color-1, color-2;
+  @include stripes($colors);
+}
+
+.stripes2 {
+  $colors: color-1, color-2, color-3;
+  @include stripes($colors);
+}
+
+.stripes3 {
+  $colors: color-1, color-2 50%, color-3 70%;
+  @include stripes($colors);
 }
