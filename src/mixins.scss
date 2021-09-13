@@ -1,46 +1,10 @@
-$md-color-1: 255, 0, 0;
-$md-color-2: 0, 255, 0;
-$md-color-3: 0, 0, 255;
+$--md-color-1: 230, 243, 255 !default;
+$--md-color-2: 184, 221, 255 !default;
 
 $variables: (
-  'color-1': $md-color-1,
-  'color-2': $md-color-2,
-  'color-3': $md-color-3
+  'color-1': $--md-color-1,
+  'color-2': $--md-color-2
 );
-
-// 1
-@mixin background-gradient($start-color, $end-color, $orientation) { 
-  background: $start-color;
-
-  @if $orientation == 'vertical' {
-    background: -webkit-linear-gradient(top, $start-color, $end-color);
-    background: linear-gradient(to bottom, $start-color, $end-color);
-  } @else if $orientation == 'horizontal' {
-    background: -webkit-linear-gradient(left, $start-color, $end-color);
-    background: linear-gradient(to right, $start-color, $end-color);
-  } @else {
-    background: -webkit-radial-gradient(center, ellipse cover, $start-color, $end-color);
-    background: radial-gradient(ellipse at center, $start-color, $end-color);
-  }
-}
-
-// 2
-@mixin linear-gradient($from, $to) {
-  /* Fallback for sad browsers */
-  background-color: $to;
-  /* Mozilla Firefox */
-  background-image:-moz-linear-gradient($from, $to);
-  /* Opera */
-  background-image:-o-linear-gradient($from, $to);
-  /* WebKit (Safari 4+, Chrome 1+) */
-  background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0, $from), color-stop(1, $to));
-  /* WebKit (Chrome 11+) */
-  background-image: -webkit-linear-gradient($from, $to);
-  /* IE10 */
-  background-image: -ms-linear-gradient($from, $to);
-  /* W3C */
-  background-image: linear-gradient($from, $to);
-}
 
 // 3
 @mixin md-linear($colors, $direction: to right) { 
@@ -93,10 +57,27 @@ $variables: (
   background-image: radial-gradient($direction, $css3Gradient);
 }
 
-.stripes {
+
+.linear {
   @include md-linear((color-1, color-2));
 }
 
-.stripes2 {
+.linear-2 {
+  @include md-linear((color-1, color-2 50%));
+}
+
+.linear-3 {
+  @include md-linear((color-1, color-2), to bottom);
+}
+
+.radial {
   @include md-radial((color-1, color-2));
+}
+
+.radial-2 {
+  @include md-radial((color-1, color-2 50%));
+}
+
+.radial-3 {
+  @include md-radial((color-1, color-2), closest-side);
 }
