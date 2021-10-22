@@ -1,0 +1,5 @@
+@import './mixins.scss';
+
+html.theme-default:root {
+  @extend .theme-default;
+}
